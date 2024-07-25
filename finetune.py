@@ -10,17 +10,19 @@ import signal
 import workhorse
 #Start
 
-vid = 'prerna'
-r'''workhorse.open_slice(inp=(rf"inputs\{vid}.wav"),
-                    opt_root=rf"outputs\{vid}_slicer_opt",
+vid = 'romeo'
+workhorse.open_slice(inp=os.path.join("inputs", rf"{vid}.wav"),
+                    opt_root=os.path.join("outputs", rf"{vid}_slicer_opt"),
                     threshold='-34', min_length='4000', min_interval='300', hop_size='10',
                     max_sil_kept='500', _max=0.9, alpha=0.25, n_parts=4)
 
-workhorse.open_asr(rf"outputs\{vid}_slicer_opt",
-                   rf"outputs\{vid}_asr_opt",'Faster Whisper (多语种)','large-v3','en')
+workhorse.open_asr(asr_inp_dir=os.path.join("outputs", rf"{vid}_slicer_opt"),
+                   asr_opt_dir=os.path.join("outputs", rf"{vid}_asr_opt"),
+                   asr_model='Faster Whisper (多语种)',asr_model_size='large-v3',asr_lang='en')
 
 
-workhorse.open1abc(inp_text = rf"outputs\{vid}_asr_opt\{vid}_slicer_opt.list",
+workhorse.open1abc(inp_text =
+                    os.path.join("outputs", rf"{vid}_asr_opt", rf"{vid}_slicer_opt.list"),
                    inp_wav_dir = '',exp_name = vid, gpu_numbers1a = '0-0', gpu_numbers1Ba = '0-0',
                    gpu_numbers1c = '0-0',bert_pretrained_dir = 'GPT_SoVITS/pretrained_models/chinese-roberta-wwm-ext-large',
                    ssl_pretrained_dir = 'GPT_SoVITS/pretrained_models/chinese-hubert-base',
@@ -31,7 +33,7 @@ workhorse.open1Ba(batch_size = 2, total_epoch = 24, exp_name = vid,text_low_lr_r
                   if_save_every_weights = True,save_every_epoch =4,gpu_numbers1Ba = "0",
                   pretrained_s2G = 'GPT_SoVITS/pretrained_models/s2G488k.pth',
                   pretrained_s2D = 'GPT_SoVITS/pretrained_models/s2D488k.pth')
-'''
+
 workhorse.open1Bb(batch_size = 1,total_epoch = 40,exp_name = vid,if_dpo = False,if_save_latest = True,
                   if_save_every_weights = True,save_every_epoch = 5,gpu_numbers = "0",
                   pretrained_s1 ='GPT_SoVITS/pretrained_models/s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt')
