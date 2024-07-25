@@ -5,6 +5,8 @@ env
 runtime
 .idea
 output
+outputs
+inputs
 logs
 reference
 GPT_weights
