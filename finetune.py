@@ -10,7 +10,7 @@ import signal
 import workhorse
 #Start
 
-vid = 'romeo'
+vid = 'romeov3'
 workhorse.open_slice(inp=os.path.join("inputs", rf"{vid}.wav"),
                     opt_root=os.path.join("outputs", rf"{vid}_slicer_opt"),
                     threshold='-34', min_length='4000', min_interval='300', hop_size='10',
@@ -29,12 +29,12 @@ workhorse.open1abc(inp_text =
                    pretrained_s2G_path = 'GPT_SoVITS/pretrained_models/s2G488k.pth')
 
 
-workhorse.open1Ba(batch_size = 2, total_epoch = 24, exp_name = vid,text_low_lr_rate = 0.4 ,if_save_latest = True,
+workhorse.open1Ba(batch_size = 5, total_epoch = 16, exp_name = vid,text_low_lr_rate = 0.4 ,if_save_latest = True,
                   if_save_every_weights = True,save_every_epoch =4,gpu_numbers1Ba = "0",
                   pretrained_s2G = 'GPT_SoVITS/pretrained_models/s2G488k.pth',
                   pretrained_s2D = 'GPT_SoVITS/pretrained_models/s2D488k.pth')
 
-workhorse.open1Bb(batch_size = 1,total_epoch = 40,exp_name = vid,if_dpo = False,if_save_latest = True,
+workhorse.open1Bb(batch_size = 5,total_epoch = 20,exp_name = vid,if_dpo = False,if_save_latest = True,
                   if_save_every_weights = True,save_every_epoch = 5,gpu_numbers = "0",
                   pretrained_s1 ='GPT_SoVITS/pretrained_models/s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt')
 
